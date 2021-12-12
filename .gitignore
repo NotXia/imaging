@@ -132,3 +132,4 @@ dmypy.json
 # Latex
 Relazione/Relazione.aux
 Relazione/Relazione.synctex.gz
+.vscode/settings.json
