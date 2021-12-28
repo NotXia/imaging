@@ -13,7 +13,7 @@ def polygon(sides, radius=1, rotation=0, start_coord=(0, 0)):
 def generate_figure(w, h):
     out_image = Image.new("RGBA", (w, h))
 
-    num_polygons = random.randrange(5, 8)
+    num_polygons = random.randrange(3, 6)
     for i in range(num_polygons):
         # Immagine con il nuovo poligono
         image = Image.new("RGBA", (w, h))
