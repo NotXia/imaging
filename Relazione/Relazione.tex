@@ -1,14 +1,26 @@
 \documentclass[11pt]{article}
+\usepackage{algorithm2e}
 \usepackage[italian]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{amsfonts, amssymb, amsmath}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{mathtools}
 \usepackage[margin=3cm]{geometry}
 
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
 \begin{document}
+\graphicspath{ {./img/} }
 \begin{titlepage}
     \begin{center}
         \vspace*{1.5cm}
             
         \Huge
-        \textbf{MNK-GAME}
+        \textbf{IMAGING}
             
         \vspace{0.5cm}
         \LARGE
@@ -34,17 +46,67 @@
         \vspace{6cm}
             
         Anno accademico\\
-        $2020 - 2021$
+        $2021 - 2022$
             
         \vspace{0.8cm}
             
             
         \Large
-        Corso di Algoritmi e Strutture Dati\\
+        Corso di Calcolo Numerico\\
         Alma Mater Studiorum $\cdot$ Università di Bologna\\
             
     \end{center}
 \end{titlepage}
+\pagebreak
+
+\section*{Introduzione}
+Il progetto consiste nel ricostruire un'immagine a partire da una sua istanza alterata da uno sfocamento noto e un rumore casuale.\\
+Si tratta di un problema solitamente affrontato elaborando immagini provenienti da un dispositivo di acquisizione che nel suo processo di cattura deve digitalizzare un segnale analogico. 
+Per risolvere tali problemi sono note diverse formulazioni. Quelle impiegate per questo progetto sono:
+\begin{itemize}
+    \setlength\itemsep{0.05cm}
+    \item Minimi quadrati
+    \item Minimi quadrati con regolarizzazione di Tikhonov
+    \item Minimi quadrati con regolarizzazione tramite variazione totale
+\end{itemize}
+È noto che risolvere il problema di deblur come minimi quadrati in modo diretto è mal condizionato e per questo si introducono tecniche di regolarizzazione.\\
+Per misurare la qualità dei risultati verranno impiegate due metriche:
+\begin{itemize}
+    \setlength\itemsep{0.05cm}
+    \item Mean Squared Error (MSE) \textbf{[AGGIUNGERE DESCRIZIONE]}
+    \item Peak Signal-to-Noise Ratio (PSNR) \textbf{[AGGIUNGERE DESCRIZIONE]}
+\end{itemize}
+
+\section*{Esecuzione preliminare}
+Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione i cui risultati sono osservabili in Figura \ref{fig:deblur1}.\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{deblur1.png}
+    \caption{Risultato sulle varie formulazioni}
+    \label{fig:deblur1}
+\end{figure}
+Come atteso, il risultato ottenuto con la formulazione senza regolarizzazione ha prodotto un'immagine molto distante dall'originale. 
+Mentre utilizzando metodi di regolarizzazione, il risultato ottenuto è il più vicino all'immagine di partenza. Rispetto alle metriche i valori ottenuti sono:
+\begin{center}
+    \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    \multicolumn{5}{|c|}{MSE rispetto all'originale} \\
+    \hline
+    Ricostruita & Naive & Tikhonov 1 & Tikhonov 2 & Variazione totale \\ 
+    $2.6945 \cdot 10^{-3}$ & $2.0220 \cdot 10^{-1}$ & $6.2900 \cdot 10^{-3}$ & $6.2900 \cdot 10^{-3}$ & $6.7933 \cdot 10^{-4}$ \\ 
+    \hline
+    \end{tabular}
+\end{center}
+\begin{center}
+    \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    \multicolumn{5}{|c|}{PSNR rispetto all'originale} \\
+    \hline
+    Ricostruita & Naive & Tikhonov 1 & Tikhonov 2 & Variazione totale \\ 
+    $25.6952$ & $6.9422$ & $22.0135$ & $22.0135$ & $31.6792$ \\ 
+    \hline
+    \end{tabular}
+\end{center}
+Si nota quindi che con la regolarizzazione tramite variazione totale, il risultato ottenuto è migliore rispetto agli altri metodi.
 
 \end{document}
-
