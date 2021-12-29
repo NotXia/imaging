@@ -78,6 +78,32 @@ Per misurare la qualità dei risultati verranno impiegate due metriche:
 \end{itemize}
 
 \section*{Esecuzione preliminare}
+Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione sull'immagine in Figura \ref{fig:originale1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4cm]{originale1.png}
+    \caption{Immagine di test}
+    \label{fig:originale1}
+\end{figure}
+
+\subsection*{Valutazione algoritmi al variare di $\lambda$}
+Per valutare il risultato dei vari metodi, è necessario prima determinare il valore $\lambda$ del termine di regolarizzazione per gli algoritmi che lo prevedono.
+\subsubsection*{Tikhonov}
+Il seguente grafico mostra la variazione del PSNR al variare di $\lambda \in [0.01, 2]$ con passo 50:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{tikhonov_lambda1.png}
+    \caption{$\lambda=0.17244897959183675$ e $\texttt{PSNR}=24.74837633315581$}
+    \label{fig:tikhonov_lambda1}
+\end{figure}
+Più nel dettaglio, focalizzando l'attenzione sull'intorno del punto trovato al passo precedente, il risultato con $\lambda \in [0.15, 0.3]$ è:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{tikhonov_lambda2.png}
+    \caption{$\lambda=0.1894736842105263$ e $\texttt{PSNR}=24.784535396524$}
+    \label{fig:tikhonov_lambda2}
+\end{figure}
+
 Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione i cui risultati sono osservabili in Figura \ref{fig:deblur1}.\\
 \begin{figure}[H]
     \centering
@@ -86,7 +112,8 @@ Per avere una visione sul comportamento delle varie formulazioni, è stata esegu
     \label{fig:deblur1}
 \end{figure}
 Come atteso, il risultato ottenuto con la formulazione senza regolarizzazione ha prodotto un'immagine molto distante dall'originale. 
-Mentre utilizzando metodi di regolarizzazione, il risultato ottenuto è il più vicino all'immagine di partenza. Rispetto alle metriche i valori ottenuti sono:
+Mentre utilizzando metodi di regolarizzazione, il risultato ottenuto è il più vicino all'immagine di partenza. \\
+Rispetto alle metriche i valori ottenuti sono:
 \begin{center}
     \begin{tabular}{ |c|c|c|c|c| }
     \hline
