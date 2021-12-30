@@ -93,14 +93,14 @@ Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{tikhonov_lambda1.png}
-    \caption{$\lambda \simeq 0.1724$ e $\texttt{PSNR} \simeq 24.74838$}
+    \caption{$\lambda \simeq 0.1724$ e $\texttt{PSNR} \simeq 24.7699$}
     \label{fig:tikhonov_lambda1}
 \end{figure}
 Più nel dettaglio, focalizzando l'attenzione sull'intorno del punto trovato al passo precedente, il risultato con $\lambda \in [0.15, 0.3]$ è:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{tikhonov_lambda2.png}
-    \caption{$\lambda \simeq 0.1895$ e $\texttt{PSNR} \simeq 24.7845$}
+    \caption{$\lambda \simeq 0.1895$ e $\texttt{PSNR} \simeq 24.8064$}
     \label{fig:tikhonov_lambda2}
 \end{figure}
 
@@ -109,14 +109,14 @@ Analogamente, il seguente grafico mostra il la variazione del PSNR per $\lambda 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{tv_lambda1.png}
-    \caption{$\lambda \simeq 0.0912$ e $\texttt{PSNR} \simeq 36.7470$}
+    \caption{$\lambda \simeq 0.0912$ e $\texttt{PSNR} \simeq 36.6281$}
     \label{fig:tv_lambda1}
 \end{figure}
-Nell'intorno del punto trovato precedentemente, il risultato con $\lambda \in [0.08, 0.11]$ è:
+Nell'intorno del punto trovato precedentemente, il risultato con $\lambda \in [0.06, 0.10]$ è:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{tv_lambda2.png}
-    \caption{$\lambda \simeq 0.0872$ e $\texttt{PSNR} \simeq 36.8429$}
+    \caption{$\lambda \simeq 0.072472$ e $\texttt{PSNR} \simeq 36.8257$}
     \label{fig:tv_lambda2}
 \end{figure}
 
@@ -136,7 +136,7 @@ Rispetto alle metriche i valori ottenuti sono:
     \multicolumn{5}{|c|}{MSE rispetto all'originale} \\
     \hline
     Ricostruita & Naive & Tikhonov 1 & Tikhonov 2 & Variazione totale \\ 
-    $0.2674 \cdot 10^{-2}$ & $0.1999 \cdot 10^{0}$ & $0.3341 \cdot 10^{-2}$ & $0.3341 \cdot 10^{-2}$ & $0.2099 \cdot 10^{-3}$ \\ 
+    $0.2683 \cdot 10^{-2}$ & $0.2015 \cdot 10^{0}$ & $0.3306 \cdot 10^{-2}$ & $0.3306 \cdot 10^{-2}$ & $0.2077 \cdot 10^{-3}$ \\ 
     \hline
     \end{tabular}
 \end{center}
@@ -146,7 +146,7 @@ Rispetto alle metriche i valori ottenuti sono:
     \multicolumn{5}{|c|}{PSNR rispetto all'originale} \\
     \hline
     Ricostruita & Naive & Tikhonov 1 & Tikhonov 2 & Variazione totale \\ 
-    $25.7291$ & $6.9916$ & $24.7608$ & $24.7607$ & $36.7804$ \\ 
+    $25.7131$ dB & $6.9562$ dB & $24.8065$ dB & $24.8065$ dB & $36.8249$ dB \\ 
     \hline
     \end{tabular}
 \end{center}
