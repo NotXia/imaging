@@ -1,0 +1,22 @@
+Rumore con deviazione 0.05
+Kernel 24x24 con sigma=3
+
+MSE originale/acquisita             0.0032035677857523617
+MSE originale/naive                 5.719386270374898
+MSE originale/Tikhonov1             0.0015527654741680059
+MSE originale/Tikhonov2             0.0015527355683298697
+MSE originale/Variazione totale     0.0003094278024748073
+
+PSNR originale/acquisita            24.943660821398144
+PSNR originale/naive                -7.5734942849760305
+PSNR originale/Tikhonov1            28.08894134075784
+PSNR originale/Tikhonov2            28.089024985492152
+PSNR originale/Variazione totale    35.094406669814376
+
+Ierazioni naive                     200 (max iter)
+Ierazioni Tikhonov CG               18
+Ierazioni Tikhonov GD               99
+Ierazioni Variazione totale         29
+
+Tikhonov lambda = 0.09 | PSNR = 28.08894134075784
+TV lambda = 0.04 | PSNR = 35.094406669814376

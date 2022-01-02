@@ -81,7 +81,7 @@ Per misurare la qualità dei risultati verranno impiegate due metriche:
 Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione sull'immagine in Figura \ref{fig:originale1}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4cm]{originale1.png}
+    \includegraphics[width=4cm]{esecuzione1/originale.png}
     \caption{Immagine di test}
     \label{fig:originale1}
 \end{figure}
@@ -92,38 +92,24 @@ Per valutare il risultato dei vari metodi, è necessario prima determinare il va
 Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 2]$ con passo 50:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{tikhonov_lambda1.png}
+    \includegraphics[width=10cm]{esecuzione1/tikhonov_lambda.png}
     \caption{$\lambda \simeq 0.1724$ e $\texttt{PSNR} \simeq 24.7699$}
     \label{fig:tikhonov_lambda1}
-\end{figure}
-Più nel dettaglio, focalizzando l'attenzione sull'intorno del punto trovato al passo precedente, il risultato con $\lambda \in [0.15, 0.3]$ è:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=10cm]{tikhonov_lambda2.png}
-    \caption{$\lambda \simeq 0.1895$ e $\texttt{PSNR} \simeq 24.8064$}
-    \label{fig:tikhonov_lambda2}
 \end{figure}
 
 \subsubsection*{Variazione totale}
 Analogamente, il seguente grafico mostra il la variazione del PSNR per $\lambda \in [0.01, 2]$ con passo 50:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{tv_lambda1.png}
+    \includegraphics[width=10cm]{esecuzione1/tv_lambda.png}
     \caption{$\lambda \simeq 0.0912$ e $\texttt{PSNR} \simeq 36.6281$}
     \label{fig:tv_lambda1}
-\end{figure}
-Nell'intorno del punto trovato precedentemente, il risultato con $\lambda \in [0.06, 0.10]$ è:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=10cm]{tv_lambda2.png}
-    \caption{$\lambda \simeq 0.072472$ e $\texttt{PSNR} \simeq 36.8257$}
-    \label{fig:tv_lambda2}
 \end{figure}
 
 Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione i cui risultati sono osservabili in Figura \ref{fig:deblur1}.\\
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{deblur1.png}
+    \includegraphics[width=15cm]{esecuzione1/deblur.png}
     \caption{Risultato sulle varie formulazioni}
     \label{fig:deblur1}
 \end{figure}
