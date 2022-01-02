@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{mathtools}
 \usepackage[margin=3cm]{geometry}
+\usepackage{subfig}
+\usepackage{mwe}
 
 \tolerance=1
 \emergencystretch=\maxdimen
@@ -86,56 +88,112 @@ Per avere una visione sul comportamento delle varie formulazioni, è stata esegu
     \label{fig:originale1}
 \end{figure}
 
-\subsection*{Valutazione algoritmi al variare di $\lambda$}
-Per valutare il risultato dei vari metodi, è necessario prima determinare il valore $\lambda$ del termine di regolarizzazione per gli algoritmi che lo prevedono.
-\subsubsection*{Tikhonov}
-Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 2]$ con passo 50:
+\subsection*{Prima esecuzione}
+La prima esecuzione è stata eseguita con un kernel $5 \times 5$ con $\sigma=0.5$ e rumore gaussiano con deviazione standard $]0, 0.05]$.
+
+\subsubsection*{Stima di $\lambda$}
+Per valutare il risultato dei vari metodi, è necessario prima determinare il valore $\lambda$ del termine di regolarizzazione degli algoritmi che lo prevedono.
+Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 1]$ con passo $0.01$:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{esecuzione1/tikhonov_lambda.png}
-    \caption{$\lambda \simeq 0.1724$ e $\texttt{PSNR} \simeq 24.7699$}
+    \caption{$\lambda=0.19$ e $\texttt{PSNR} \simeq 24.79$}
     \label{fig:tikhonov_lambda1}
 \end{figure}
-
-\subsubsection*{Variazione totale}
-Analogamente, il seguente grafico mostra il la variazione del PSNR per $\lambda \in [0.01, 2]$ con passo 50:
+Analogamente, il seguente grafico mostra la variazione del PSNR per $\lambda \in [0.01, 1]$ con passo $0.01$:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{esecuzione1/tv_lambda.png}
-    \caption{$\lambda \simeq 0.0912$ e $\texttt{PSNR} \simeq 36.6281$}
+    \caption{$\lambda=0.07$ e $\texttt{PSNR} \simeq 36.74$}
     \label{fig:tv_lambda1}
 \end{figure}
 
-Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione i cui risultati sono osservabili in Figura \ref{fig:deblur1}.\\
+\subsubsection*{Esecuzione}
+I risultati della prima esecuzione sono osservabili in Figura \ref{fig:deblur1}.\\
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15cm]{esecuzione1/deblur.png}
+    \includegraphics[width=13cm]{esecuzione1/deblur.png}
     \caption{Risultato sulle varie formulazioni}
     \label{fig:deblur1}
 \end{figure}
-Come atteso, il risultato ottenuto con la formulazione senza regolarizzazione ha prodotto un'immagine molto distante dall'originale. 
-Mentre utilizzando metodi di regolarizzazione, il risultato ottenuto è il più vicino all'immagine di partenza. \\
-Rispetto alle metriche i valori ottenuti sono:
+
 \begin{center}
-    \begin{tabular}{ |c|c|c|c|c| }
+    \begin{tabular}{ |c|c|c|c|c|c| }
     \hline
-    \multicolumn{5}{|c|}{MSE rispetto all'originale} \\
+    & Acquisita & Naive & Tikhonov CG & Tikhonov GD & Variazione totale \\ 
     \hline
-    Ricostruita & Naive & Tikhonov 1 & Tikhonov 2 & Variazione totale \\ 
-    $0.2683 \cdot 10^{-2}$ & $0.2015 \cdot 10^{0}$ & $0.3306 \cdot 10^{-2}$ & $0.3306 \cdot 10^{-2}$ & $0.2077 \cdot 10^{-3}$ \\ 
+    MSE & $0.2699 \cdot 10^{-2}$ & $0.2047 \cdot 10^{0}$ & $0.33197 \cdot 10^{-2}$ & $0.3320 \cdot 10^{-2}$ & $0.2119 \cdot 10^{-3}$ \\ 
+    PSNR & $25.6878$ & $6.8874$ & $24.7890$ & $24.7890$ & $36.7382$ \\ 
+    Iter. & & 140 & 14 & 48 & 14 \\ 
     \hline
     \end{tabular}
 \end{center}
+
+Come atteso, il risultato ottenuto con la formulazione come problema ai minimi quadrati senza regolarizzazione ha prodotto un'immagine molto distante dall'originale.\\
+Utilizzando la regolarizzazione di Tikhonov, si è ottenuto un risultato quasi invariato rispetto all'immagine acquisita se non addirittura peggiore; mentre a livello di velocità, il metodo del gradiente ha richiesto più iterazioni rispetto al metodo del gradiente coniugato.\\
+Con la regolarizzazione tramite variazione totale, il risultato ottenuto è invece migliore rispetto agli altri metodi e molto vicina all'immagine originale.\\
+La ragione per cui Tikhonov ha prodotto tale risultato è probabilmente dovuto al fatto che il rumore "sovrasta" il blur.
+
+\subsection*{Seconda esecuzione}
+Per vedere le prestazioni di Tikhonov in uno scenario differente, è stata effettuata una seconda esecuzione sulla stessa immagine di partenza con blur ottenuto da un kernel $24 \times 24$ con $\sigma=3$ e rumore con deviazione standard $]0, 0.05]$.
+
+\subsubsection*{Stima di $\lambda$}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=6cm]{esecuzione2/tikhonov_lambda.png}
+        \caption{$\lambda=0.09$ e $\texttt{PSNR} \simeq 28.09$}
+        \label{fig:tikhonov_lambda2}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=6cm]{esecuzione2/tv_lambda.png}
+        \caption{$\lambda=0.04$ e $\texttt{PSNR} \simeq 35.09$}
+        \label{fig:tv_lambda2}
+    \end{minipage}
+\end{figure}
+
+\subsubsection*{Esecuzione}
+I risultati sono rappresentati in Figura \ref{fig:deblur2}.\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{esecuzione2/deblur.png}
+    \caption{Risultato sulle varie formulazioni}
+    \label{fig:deblur2}
+\end{figure}
+
 \begin{center}
-    \begin{tabular}{ |c|c|c|c|c| }
+    \begin{tabular}{ |c|c|c|c|c|c| }
     \hline
-    \multicolumn{5}{|c|}{PSNR rispetto all'originale} \\
+    & Acquisita & Naive & Tikhonov CG & Tikhonov GD & Variazione totale \\ 
     \hline
-    Ricostruita & Naive & Tikhonov 1 & Tikhonov 2 & Variazione totale \\ 
-    $25.7131$ dB & $6.9562$ dB & $24.8065$ dB & $24.8065$ dB & $36.8249$ dB \\ 
+    MSE & $0.3204 \cdot 10^{-2}$ & $0.5719 \cdot 10^{-1}$ & $0.1553 \cdot 10^{-2}$ & $0.1553 \cdot 10^{-2}$ & $0.3094 \cdot 10^{-3}$ \\ 
+    PSNR & $24.9437$ & $-7.5735$ & $28.0889$ & $28.0890$ & $35.0944$ \\ 
+    Iter. & & 200 (max) & 18 & 99 & 29 \\ 
     \hline
     \end{tabular}
 \end{center}
-Si nota quindi che con la regolarizzazione tramite variazione totale, il risultato ottenuto è migliore rispetto agli altri metodi.
+
+Anche in questo caso, il metodo naive non ha prodotto soluzioni accettabili, mentre la regolarizzazione tramite variazione totale, come nel caso precedente, ha prodotto il risultato migliore.\\
+Il metodo regolarizzato con Tikhonov invece, a differenza dell'esecuzione precedente, ha prodotto un risultato migliore dell'immagine acquisita e, 
+analogamente, il numero di iterazioni del metodo che minimizza con il gradiente coniugato è minore rispetto al metodo del gradiente.
+
+\section*{Confronto gradiente coniugato e metodo del gradiente}
+
+\section*{Semi-convergenza}
+
+\section*{Risultati su esecuzioni multiple}
+
+
+
+
+% # Relazione
+
+% 1. Riportare e commentare i risultati ottenuti nei punti 2. 3. (e 4.) su un immagine del set creato e su altre due immagini in bianco e nero  (fotografiche/mediche/astronomiche)
+% 2. Riportare delle tabelle con le misure di PSNR e MSE ottenute al variare dei parametri (dimensione kernel, valore di sigma, la deviazione standard del rumore, il parametro di regolarizzazione). 
+% 3. Calcolare sull’intero set di immagini medie e deviazione standard delle metriche per alcuni valori fissati dei parametri.  
+% 4. Analizzare su 2 esecuzioni le proprietà dei metodi numerici utilizzati (gradiente coniugato e gradiente) in termini di numero di iterazioni, andamento dell’errore, della funzione obiettivo, norma del gradiente. 
+
 
 \end{document}
