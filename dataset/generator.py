@@ -13,6 +13,11 @@ def polygon(sides, radius=1, rotation=0, start_coord=(0, 0)):
     points = [(point[0]+start_coord[0], point[1]+start_coord[1]) for point in points]
     return points
 
+# Restituisce un'immagine contenente poligoni in scala di grigi normalizzata in [0, 1]
+# width, height         Dimensione dell'immagine
+# min_poygons           Numero minimo di poligoni generati
+# max_polygons          Numero massimo di poligoni generati
+# max_polygon_sides     Numero massimo di facce dei poligoni
 def generate_image(width, height, min_poygons=3, max_polygons=6, max_polygon_sides=10):
     out_image = Image.new("RGBA", (width, height))
     num_polygons = random.randrange(min_poygons, max_polygons)

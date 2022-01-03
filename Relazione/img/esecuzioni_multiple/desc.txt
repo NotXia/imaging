@@ -1,0 +1,30 @@
+PSNR
+Tikhonov
+whiskers1 (array([1., 1.]), array([26.03074889, 24.69643175]))
+whiskers2 (array([1., 1.]), array([27.11161645, 28.24547429]))
+mean (array([1]), array([26.39344772]))
+median (array([0.925, 1.075]), array([26.52770018, 26.52770018]))
+SD 1.0451613861676192
+
+TV
+whiskers1 (array([2., 2.]), array([35.71261477, 33.27423003]))
+whiskers2 (array([2., 2.]), array([37.42812276, 39.58198616]))
+mean (array([2]), array([36.48712539]))
+median (array([1.925, 2.075]), array([36.7582896, 36.7582896]))
+SD 1.3752327727591311
+
+
+ITERAZIONI
+Tikhonov
+whiskers1 (array([1., 1.]), array([16., 16.]))
+whiskers2 (array([1., 1.]), array([17., 18.]))
+mean (array([1]), array([16.79]))
+median (array([0.925, 1.075]), array([17., 17.]))
+SD 0.7522632517942106
+
+TV
+whiskers1 (array([2., 2.]), array([15.,  7.]))
+whiskers2 (array([2., 2.]), array([24., 28.]))
+mean (array([2]), array([19.59]))
+median (array([1.925, 2.075]), array([21., 21.]))
+SD 5.468262978314046
