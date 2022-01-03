@@ -1,0 +1,16 @@
+MSE originale/acquisita             0.0006990501435033874
+MSE originale/naive                 0.0002163713223541777
+MSE originale/Tikhonov1             0.0002694407509771702
+MSE originale/Tikhonov2             0.0002728691000149669
+MSE originale/Variazione totale     8.945935742097168e-05
+
+PSNR originale/acquisita            31.554916707982926
+PSNR originale/naive                36.64800300721913
+PSNR originale/Tikhonov1            35.695367197262186
+PSNR originale/Tikhonov2            35.6404564151146
+PSNR originale/Variazione totale    40.483742256528366
+
+Iterazioni naive                    135
+Iterazioni Tikhonov CG              62
+Iterazioni Tikhonov GD              1000
+Iterazioni Variazione totale        35
