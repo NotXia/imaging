@@ -42,15 +42,15 @@ def generate_image(width, height, min_poygons=3, max_polygons=6, max_polygon_sid
         # Sovrapposizione delle immagini
         out_image = Image.alpha_composite(out_image, image)
 
-    # return out_image.convert("L")
-    return np.array(out_image.convert("L")) / 255  # Immagine in scala di grigi normalizzata in [0, 1]
+    return out_image.convert("L")
+    # return np.array(out_image.convert("L")) / 255  # Immagine in scala di grigi normalizzata in [0, 1]
 
 
 if __name__ == "__main__":
     image = generate_image(512, 512)
-    # image.show()
-    # image.save("test.png")
+    image.show()
+    image.save("image.png")
 
-    print(np.min(image), np.max(image))
-    plt.imshow(image, cmap="gray")
-    plt.show()
+    # print(np.min(image), np.max(image))
+    # plt.imshow(image, cmap="gray")
+    # plt.show()
