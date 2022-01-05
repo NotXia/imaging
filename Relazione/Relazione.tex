@@ -23,7 +23,9 @@
         \vspace*{1.5cm}
             
         \Huge
-        \textbf{IMAGING}
+        \textbf{IMAGING} \\
+        \LARGE
+        Deblur
             
         \vspace{0.5cm}
         \LARGE
@@ -64,15 +66,19 @@
 
 \section{Introduzione}
 Il progetto consiste nel ricostruire un'immagine a partire da una sua istanza alterata da uno sfocamento noto e un rumore casuale.\\
-Si tratta di un problema solitamente affrontato elaborando immagini provenienti da un dispositivo di acquisizione che nel suo processo di cattura deve digitalizzare un segnale analogico. 
-Per risolvere tali problemi sono note diverse formulazioni. Quelle impiegate per questo progetto sono:
+Si tratta di un problema solitamente affrontato elaborando immagini provenienti da un dispositivo di acquisizione che nel suo processo di cattura deve digitalizzare un segnale analogico.\\ 
+La soluzione di tale problema viene formulata come problema ai minimi quadrati:
+\begin{align*}
+    \min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2}
+\end{align*}
+dove $A$ è l'operatore di blur, $x$ l'immagine ricostruita e $b$ l'immagine acquisita.\\
+Per la risoluzione sono note diverse formulazioni. Quelle impiegate sono:
 \begin{itemize}
     \setlength\itemsep{0.05cm}
-    \item Minimi quadrati
-    \item Minimi quadrati con regolarizzazione di Tikhonov
-    \item Minimi quadrati con regolarizzazione tramite variazione totale
+    \item Metodo naive $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2}$. Questo approccio è noto per essere mal condizionato.
+    \item Regolarizzazione di Tikhonov $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2} + \lambda \Vert x \|_{2}^{2}$
+    \item Regolarizzazione tramite variazione totale $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2} + \lambda \phi_{\text{TV}}(x)$
 \end{itemize}
-È noto che risolvere il problema di deblur come minimi quadrati in modo diretto è mal condizionato e per questo si introducono tecniche di regolarizzazione.\\
 Per misurare la qualità dei risultati verranno impiegate due metriche:
 \begin{itemize}
     \setlength\itemsep{0.05cm}
@@ -80,6 +86,7 @@ Per misurare la qualità dei risultati verranno impiegate due metriche:
     \item Peak Signal-to-Noise Ratio (PSNR) \textbf{[AGGIUNGERE DESCRIZIONE]}
 \end{itemize}
 
+\newpage
 \section{Esecuzione preliminare}
 \label{chap:lambda}
 Per avere una visione sul comportamento delle varie formulazioni, è stata eseguita una prima sperimentazione sull'immagine in \autoref{fig:originale1}
@@ -95,14 +102,14 @@ La prima esecuzione è stata eseguita con un kernel $5 \times 5$ con $\sigma=0.5
 
 \subsubsection{Stima di $\lambda$}
 Per valutare il risultato dei vari metodi, è necessario prima determinare il valore $\lambda$ del termine di regolarizzazione degli algoritmi che lo prevedono.
-Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 1]$ con passo $0.01$:
+Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 1]$ con passo $0.01$ per Tikhonov:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{esecuzione/1/tikhonov_lambda.png}
     \caption{$\lambda=0.19$ e $\texttt{PSNR} \simeq 24.79$}
     \label{fig:tikhonov_lambda1}
 \end{figure}
-Analogamente, il seguente grafico mostra la variazione del PSNR per $\lambda \in [0.01, 1]$ con passo $0.01$:
+Analogamente, il seguente grafico mostra la variazione del PSNR per $\lambda \in [0.01, 1]$ con passo $0.01$ per la variazione totale:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{esecuzione/1/tv_lambda.png}
@@ -408,7 +415,6 @@ In linea di massima, sperimentalmente si è notato che il tempo di esecuzione ri
 Rispetto al dataset utilizzato, sono state eseguite diverse misurazioni al variare della dimensione del kernel, del valore di $\sigma$ e della deviazione standard del rumore. 
 Per tutte le esecuzioni è stato scelto il valore del termine di regolarizzazione utilizzando lo stesso procedimento nella \autoref{chap:lambda}.\\
 I risultati in forma aggregata sono i seguenti:
-
 \begin{center}
     \begin{tabular}{ |cc|c|c|c|c|c|c|c| }
     \hline
@@ -436,56 +442,8 @@ I risultati in forma aggregata sono i seguenti:
     \hline
     \end{tabular}
 \end{center}
-
+Come in tutti i casi precedenti, la ricostruzione naive ha prodotto soluzioni completamente distanti dall realtà.\\
+Si nota, invece, un fenomeno ricorrente nella precisione di ricostruzione per i metodi regolarizzati all'aumentare di $\sigma_{\text{kernel}}$. \\
+Con Tikhonov si nota che la fedeltà rispetto all'immagine reale aumenta all'aumentare di $\sigma_{\text{kernel}}$, mentre tramite variazione totale, il fenomeno è inverso, generando una ricostruzione meno accurata.
 
 \end{document}
-
-% 1:
-% 0.001427304780871977
-% 0.0010440853805177704
-% 3.6337175788027345e-05
-
-% 2:
-% 0.01103051952255651
-% 0.00068798017031743
-% 6.11848062920853e-05
-
-% 3:
-% 0.004990966138935439
-% 0.0006347474944564572
-% 6.187582107283506e-05
-
-% 4:
-% 0.007003851203980547
-% 0.0004514264472757439
-% 8.970527774433062e-05
-
-% 5:
-% 0.345734
-% 0.004309635657454127
-
-% 0.0017673775
-% 0.0004449716368980724
-
-% 0.00036570062500000005
-% 0.0001304443092270965
-
-% 6:
-% 3.07889625
-% 0.02764732760028541
-
-% 0.005101189999999999
-% 0.0014027355360687202
-
-% 0.00041240925
-% 7.33073366174048e-05
-
-% 7:
-% 1.4168262500000002
-% 0.012378831666902164
-
-% 0.0035578874999999998
-% 0.0009489450024072786
-
-% 0.00053522175
-% 0.00010856108530655679
