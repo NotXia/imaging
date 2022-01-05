@@ -50,7 +50,16 @@ if __name__ == "__main__":
     image = generate_image(512, 512)
     image.show()
     image.save("image.png")
-
     # print(np.min(image), np.max(image))
     # plt.imshow(image, cmap="gray")
     # plt.show()
+
+    def fortranFormat(n):
+        a = '{:.4E}'.format(float(n))
+        e = a.find('E')
+        return '0.{}{}{}{:02d}'.format(a[0], a[2:e], a[e:e + 2], abs(int(a[e + 1:]) * 1 + 1))
+
+    print(fortranFormat('60.505'))
+    print(fortranFormat('74.705'))
+    print(fortranFormat('2.000000E-09'))
+    

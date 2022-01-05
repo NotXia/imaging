@@ -14,6 +14,7 @@ median (array([1.925, 2.075]), array([36.7582896, 36.7582896]))
 SD 1.3752327727591311
 
 
+
 ITERAZIONI
 Tikhonov
 whiskers1 (array([1., 1.]), array([16., 16.]))
