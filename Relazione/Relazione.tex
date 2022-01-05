@@ -75,7 +75,7 @@ dove $A$ è l'operatore di blur, $x$ l'immagine ricostruita e $b$ l'immagine acq
 Per la risoluzione sono note diverse formulazioni. Quelle impiegate sono:
 \begin{itemize}
     \setlength\itemsep{0.05cm}
-    \item Metodo naive $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2}$. Questo approccio è noto per essere mal condizionato.
+    \item Metodo naive $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2}$. Questo approccio è noto essere mal condizionato.
     \item Regolarizzazione di Tikhonov $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2} + \lambda \Vert x \|_{2}^{2}$
     \item Regolarizzazione tramite variazione totale $\min\limits_{x} \frac{1}{2} \Vert Ax-b \|_{2}^{2} + \lambda \phi_{\text{TV}}(x)$
 \end{itemize}
@@ -98,10 +98,11 @@ Per avere una visione sul comportamento delle varie formulazioni, è stata esegu
 \end{figure}
 
 \subsection{Prima esecuzione}
-La prima esecuzione è stata eseguita con un kernel $5 \times 5$ con $\sigma=0.5$ e rumore gaussiano con deviazione standard $]0, 0.05]$.
+La prima esecuzione è stata eseguita con un blur generato da un kernel $5 \times 5$ con $\sigma=0.5$ e rumore gaussiano con deviazione standard $0.05$.
 
 \subsubsection{Stima di $\lambda$}
-Per valutare il risultato dei vari metodi, è necessario prima determinare il valore $\lambda$ del termine di regolarizzazione degli algoritmi che lo prevedono.
+Per eseguire i metodi regolarizzati è necessario prima determinare il valore $\lambda$ del parametro di regolarizzazione.\\
+Esistono condizioni che permettono di determinare se un valore di $\lambda$ sia accettabile o meno. In questo progetto verrà determinato utilizzando una ricerca iterativa del punto migliore.\\
 Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 1]$ con passo $0.01$ per Tikhonov:
 \begin{figure}[H]
     \centering
@@ -118,11 +119,11 @@ Analogamente, il seguente grafico mostra la variazione del PSNR per $\lambda \in
 \end{figure}
 
 \subsubsection{Esecuzione}
-I risultati della prima esecuzione sono osservabili in \autoref{fig:deblur1}.\\
+Fissati i valori di $\lambda$, il risultato ottenuto è il seguente:\\
 \begin{figure}[H]
     \centering
-    \includegraphics[width=13cm]{esecuzione/1/deblur.png}
-    \caption{Risultato sulle varie formulazioni}
+    \includegraphics[width=12cm]{esecuzione/1/deblur.png}
+    \caption{Risultato del processo di deblur}
     \label{fig:deblur1}
 \end{figure}
 
@@ -138,13 +139,12 @@ I risultati della prima esecuzione sono osservabili in \autoref{fig:deblur1}.\\
     \end{tabular}
 \end{center}
 
-Come atteso, il risultato ottenuto con la formulazione come problema ai minimi quadrati senza regolarizzazione ha prodotto un'immagine molto distante dall'originale.\\
-Utilizzando la regolarizzazione di Tikhonov, si è ottenuto un risultato quasi invariato rispetto all'immagine acquisita se non addirittura peggiore; mentre a livello di velocità, il metodo del gradiente ha richiesto più iterazioni rispetto al metodo del gradiente coniugato.\\
-Con la regolarizzazione tramite variazione totale, il risultato ottenuto è invece migliore rispetto agli altri metodi e molto vicina all'immagine originale.\\
-La ragione per cui Tikhonov ha prodotto tale risultato è probabilmente dovuto al fatto che il rumore "sovrasta" il blur.
+Come atteso, la ricostruzione ottenuta con la formulazione come problema ai minimi quadrati senza regolarizzazione ha prodotto un'immagine molto distante dall'originale.\\
+Utilizzando la regolarizzazione di Tikhonov, si è ottenuto un risultato quasi invariato rispetto all'immagine acquisita se non addirittura peggiore, mentre, a livello di velocità, il metodo del gradiente ha richiesto più iterazioni rispetto al metodo del gradiente coniugato.\\
+Con la regolarizzazione tramite variazione totale, il risultato ottenuto è invece migliore rispetto agli altri metodi e visivamente molto vicina all'immagine originale.\\
 
 \subsection{Seconda esecuzione}
-Per vedere le prestazioni di Tikhonov in uno scenario differente, è stata effettuata una seconda esecuzione sulla stessa immagine di partenza con blur ottenuto da un kernel $24 \times 24$ con $\sigma=3$ e rumore con deviazione standard $]0, 0.05]$.
+Per vedere le prestazioni di Tikhonov in uno scenario differente, è stata effettuata una seconda esecuzione sulla stessa immagine di partenza con blur ottenuto da un kernel $24 \times 24$ con $\sigma=3$ e rumore con deviazione standard $0.05$.
 
 \subsubsection{Stima di $\lambda$}
 \begin{figure}[H]
@@ -164,11 +164,10 @@ Per vedere le prestazioni di Tikhonov in uno scenario differente, è stata effet
 \end{figure}
 
 \subsubsection{Esecuzione}
-I risultati sono rappresentati in \autoref{fig:deblur2}.\\
 \begin{figure}[H]
     \centering
-    \includegraphics[width=13cm]{esecuzione/2/deblur.png}
-    \caption{Risultato sulle varie formulazioni}
+    \includegraphics[width=12cm]{esecuzione/2/deblur.png}
+    \caption{Risultato del processo di deblur}
     \label{fig:deblur2}
 \end{figure}
 
@@ -184,24 +183,24 @@ I risultati sono rappresentati in \autoref{fig:deblur2}.\\
     \end{tabular}
 \end{center}
 
-Anche in questo caso, il metodo naive non ha prodotto soluzioni accettabili, mentre la regolarizzazione tramite variazione totale, come nel caso precedente, ha prodotto il risultato migliore.\\
-Il metodo regolarizzato con Tikhonov invece, a differenza dell'esecuzione precedente, ha prodotto un risultato migliore dell'immagine acquisita e, 
+Anche in questo caso, il metodo naive non ha prodotto soluzioni accettabili, mentre la regolarizzazione tramite variazione totale ha prodotto il risultato migliore.\\
+Il metodo regolarizzato con Tikhonov, a differenza dell'esecuzione precedente, ha prodotto un risultato migliore dell'immagine acquisita e, 
 analogamente, il numero di iterazioni del metodo che minimizza con il gradiente coniugato è minore rispetto al metodo del gradiente.
 
 \section{Confronto tra gradiente coniugato e metodo del gradiente}
 \label{chap:confronto}
-Si analizzano ora le prestazioni di Tikhonov utilizzando i due metodi di discesa implementati. \\
+Si analizzano ora le prestazioni di Tikhonov utilizzando i due metodi di discesa implementati, focalizzando l'attenzione sulla velocità e precisione. \\
 
 \subsection{Prima esecuzione}
-Per una prima sperimentazione si è usata la \autoref{fig:originale1} con kernel $5 \times 5$ con $\sigma=0.5$ e rumore gaussiano con deviazione standard $]0, 0.05]$.\\
+Per una prima sperimentazione si è usata la \autoref{fig:originale1} con kernel $5 \times 5$ con $\sigma=0.5$ e rumore gaussiano con deviazione standard $0.05$.\\
 I risultati ottenuti sono i seguenti:
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{iterazioni_cg_gd/1/tol_iter.png}
-    \caption{Iterazioni al variare della tolleranza}
+    \caption{Numero di iterazioni al variare della tolleranza}
     \label{fig:tol_iter1}
 \end{figure}
-È immediato notare che il metodo del gradiente coniugato impiega meno iterazioni rispetto al metodo del gradiente.\\
+È immediato notare che il metodo del gradiente coniugato necessita di meno iterazioni rispetto al metodo del gradiente prima di raggiungere le condizioni di convergenza.\\
 
 \begin{figure}[H]
     \centering
@@ -209,32 +208,32 @@ I risultati ottenuti sono i seguenti:
     \caption{PSNR al variare della tolleranza}
     \label{fig:tol_psnr1}
 \end{figure}
-Il risultato ottenuto mostra che i due metodi, al variare della tolleranza, convergono allo stesso risultato.\\
+A livello di precisione, il risultato ottenuto mostra che i due metodi, al variare della tolleranza, convergono allo stesso risultato.\\
 È però presente un comportamento controintuitivo in vicinanza di valori di tolleranza elevati. 
 Infatti si ottiene un PSNR maggiore in corrispondenza di tali valori, in altri termini, si ottiene un'immagine più fedele all'originale con meno iterazioni, mentre il risultato peggiora nella continuazione dell'esecuzione (Tale problematica verrà approfondita nella \autoref{chap:semiconv}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{iterazioni_cg_gd/1/funzione_obiettivo.png}
+    \includegraphics[width=12cm]{iterazioni_cg_gd/1/funzione_obiettivo.png}
     \caption{Andamento della funzione obiettivo}
     \label{fig:obiettivo1}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{iterazioni_cg_gd/1/norma_gradiente.png}
+    \includegraphics[width=12cm]{iterazioni_cg_gd/1/norma_gradiente.png}
     \caption{Andamento della norma del gradiente}
     \label{fig:gradiente1}
 \end{figure}
-Come atteso dai risultati precedenti, per il metodo del gradiente coniugato la decrescita della funzione obiettivo è maggiore rispetto al metodo del gradiente. 
-Lo stesso risultato è osservabile con la norma del gradente che nel caso del gradiente coniugato esegue "salti" di dimensione maggiore.
+Infine, come atteso dai risultati precedenti, per il metodo del gradiente coniugato la decrescita della funzione obiettivo è maggiore rispetto al metodo del gradiente. 
+Lo stesso risultato è osservabile con la norma del gradente che nel caso del gradiente coniugato esegue passi di dimensione maggiore.
 
 \subsection{Seconda esecuzione}
-Per una seconda valutazione si è usato un kernel $24 \times 24$ con $\sigma=3$ e rumore gaussiano con deviazione standard $]0, 0.05]$.\\
+Per una seconda valutazione si è usato un kernel $24 \times 24$ con $\sigma=3$ e rumore gaussiano con deviazione standard $0.05$.\\
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{iterazioni_cg_gd/2/tol_iter.png}
-    \caption{Iterazioni al variare della tolleranza}
+    \caption{Numero di iterazioni al variare della tolleranza}
     \label{fig:tol_iter2}
 \end{figure}
 \begin{figure}[H]
@@ -245,26 +244,26 @@ Per una seconda valutazione si è usato un kernel $24 \times 24$ con $\sigma=3$ 
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{iterazioni_cg_gd/2/funzione_obiettivo.png}
+    \includegraphics[width=11cm]{iterazioni_cg_gd/2/funzione_obiettivo.png}
     \caption{Andamento della funzione obiettivo}
     \label{fig:obiettivo2}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{iterazioni_cg_gd/2/norma_gradiente.png}
+    \includegraphics[width=11cm]{iterazioni_cg_gd/2/norma_gradiente.png}
     \caption{Andamento della norma del gradiente}
     \label{fig:gradiente2}
 \end{figure}
 
-I risultati ottenuto sono in linea con quelli precedenti ed evidenziano che le prestazioni del gradiente coniugato sono maggiori rispetto a quelle del metodo del gradiente, come atteso dalle valutazioni teoriche.
+I risultati ottenuto sono in linea con quelli precedenti ed evidenziano che le prestazioni del gradiente coniugato sono maggiori rispetto a quelle del metodo del gradiente, come atteso dalle analisi teoriche.\\
+La soluzione calcolata invece, escludendo valori di tolleranza elevati, converge intorno allo stesso valore e per questo motivo è, in generale, indifferente utilizzare l'implementazione del deblur con i due metodi di discesa. Ovviamente per questioni di velocità, si preferisce utilizzare il metodo implementato con il gradiente coniugato.
 
 \section{Semi-convergenza}
 \label{chap:semiconv}
 Nella \autoref{chap:confronto} è emerso il problema per cui l'immagine ottenuta con meno iterazioni è migliore rispetto a quella ottenuta quando il metodo raggiunge convergenza. 
-Tale problema è noto come semi-convergenza, ovvero metodi per il quale il raggiungimento dell'ottimo non corrisponde al soddisfacimento delle condizioni di convergenza 
-e per questo le iterazioni successive peggiorano il risultato.\\
+Tale problema è noto come semi-convergenza, ovvero quando il raggiungimento dell'ottimo non corrisponde al soddisfacimento delle condizioni di convergenza e per questo le iterazioni successive peggiorano il risultato.\\
 Nel contesto del deblur, il problema di semi-convergenza è causato dal rumore aggiunto all'immagine. È noto che il metodo naive è quello che più viene condizionato dal rumore e per questa ragione vengono introdotti i metodi di regolarizzazione.\\
-Si analizza quindi il risultato dei vari metodi analizzando l'andamento dell'iterato $x_{k}$:
+Si analizza quindi il risultato dei vari metodi valutando l'andamento del PSNR rispetto all'iterato $x_{k}$:
 
 \subsection{Analisi con rumore}
 \subsubsection{Metodo naive}
@@ -276,7 +275,7 @@ Si analizza quindi il risultato dei vari metodi analizzando l'andamento dell'ite
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm]{semiconvergenza/1/deblur_naive.png}
+    \includegraphics[width=7cm]{semiconvergenza/1/deblur_naive.png}
     \caption{Risultato ottenuto}
     \label{fig:semiconv_deblur_naive1}
 \end{figure}
@@ -311,15 +310,17 @@ Infatti si nota che, nonostante sia ancora presente il problema di semi-converge
     \caption{Risultato ottenuto}
     \label{fig:semiconv_deblur_tv1}
 \end{figure}
-Regolarizzando tramite variazione totale invece, il problema di semi-convergenza è assente e il raggiungimento dell'ottimo avviene contemporaneamente al soddisfacimento delle condizioni di convergenza.
+Regolarizzando tramite variazione totale invece, il problema di semi-convergenza è assente nel caso dell'immagine analizzata e il raggiungimento dell'ottimo avviene contemporaneamente al soddisfacimento delle condizioni di convergenza.
 
 \subsubsection{Considerazioni finali}
-Le prove precedenti sono state eseguite con kernel $5 \times 5$ con $\sigma=0.5$ e kernel $24 \times 24$ con $\sigma=3$, entrambi i casi con rumore con deviazione standard $]0, 0.05]$.\\
-Nel caso generale, non è possibile risolvere il problema di semi-convergenza interrompendo l'esecuzione quando si rileva l'aumento dell'errore, 
-infatti come si è visto in \autoref{fig:semiconv_psnr_tikhonov1} nel caso del metodo del gradiente, l'andamento del PSNR assume più punti di massimo locale.
+Le prove precedenti sono state eseguite con kernel $5 \times 5$ con $\sigma=0.5$ e kernel $24 \times 24$ con $\sigma=3$, entrambi i casi con rumore con deviazione standard $0.05$.\\
+Nel caso generale, non è possibile risolvere il problema di semi-convergenza interrompendo l'esecuzione quando si rileva un punto di massimo. 
+Un controesempio è il caso del metodo del gradiente in \autoref{fig:semiconv_psnr_tikhonov1}, infatti, l'andamento del PSNR può assume più punti di massimo locale e quindi esisteranno casi in cui il primo massimo raggiunto non sarà necessariamente la soluzione ottima.
 
 \subsection{Analisi senza rumore}
-Si eseguono ora gli stessi esperimenti su un'immagine a cui è stato applicato un blur senza aggiungere rumore.
+Si eseguono ora gli stessi esperimenti su un'immagine a cui è stato applicato un blur senza aggiungere rumore.\\
+Un aspetto da tenere in considerazione è che la ricerca del parametro di regolarizzazione $\lambda$ ha prodotto risultati tendenti a 0. Per evitare di annullare il termine di regolarizzazione, riconducendosi al metodo naive, è stato scelto un valore di $\lambda$ molto piccolo.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{semiconvergenza/3/psnr_naive.png}
@@ -335,7 +336,7 @@ Si eseguono ora gli stessi esperimenti su un'immagine a cui è stato applicato u
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{semiconvergenza/3/psnr_tv.png}
-    \caption{PSNR al variare del numero delle iterazioni con regolarizzazione tramite variazione totale}
+    \caption{PSNR al variare delle iterazioni con regolarizzazione tramite variazione totale}
     \label{fig:semiconv_deblur_tv3}
 \end{figure}
 \begin{figure}[H]
@@ -344,23 +345,24 @@ Si eseguono ora gli stessi esperimenti su un'immagine a cui è stato applicato u
     \caption{Risultato ottenuto}
     \label{fig:semiconv_deblur3}
 \end{figure}
-Come atteso tutti i metodi hanno raggiunto convergenza e ottimo contemporaneamente e il risultato, in assenza di rumore, si presenta molto simile indipendentemente dalla formulazione.
+Come atteso tutti i metodi hanno raggiunto convergenza e ottimo contemporaneamente e il risultato, in assenza di rumore, si presenta visivamente molto simile indipendentemente dalla formulazione.
 
 \section{Risultati su esecuzioni multiple}
 \subsection{Esecuzioni su un dataset generato casualmente}
 Per una valutazione complessiva dei metodi, sono stati eseguiti dei test su un dataset di immagini contenenti poligoni regolari generati casualmente 
-a cui è stato applicato un blur con kernel $9 \times 9$ con $\sigma_{blur}=1.3$ e rumore con $sigma_{noise}=0.05$.\\
+a cui è stato applicato un blur con kernel $9 \times 9$ con $\sigma_{blur}=1.3$ e rumore con $\sigma_{noise}=0.05$.\\
+Come concluso in \autoref{chap:confronto}, verrà utilizzato solamente il metodo del gradiente coniugato poiché produce, in tempo minore, lo stesso risultato del metodo del gradiente.\\
 I risultati sono i seguenti:
 \begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=7cm]{esecuzioni_multiple/100/psnr1.png}
+        \includegraphics[width=6.5cm]{esecuzioni_multiple/100/psnr1.png}
         \label{fig:100_psnr1}
     \end{minipage}\hfill
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=7cm]{esecuzioni_multiple/100/psnr2.png}
+        \includegraphics[width=6.5cm]{esecuzioni_multiple/100/psnr2.png}
         \label{fig:100_psnr2}
     \end{minipage}
     \caption{Boxplot al variare del PSNR}
@@ -384,12 +386,12 @@ mentre i metodi regolarizzati hanno un comportamento migliore ed è evidente che
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=7cm]{esecuzioni_multiple/100/iter1.png}
+        \includegraphics[width=6.5cm]{esecuzioni_multiple/100/iter1.png}
         \label{fig:100_iter1}
     \end{minipage}\hfill
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=7cm]{esecuzioni_multiple/100/iter2.png}
+        \includegraphics[width=6.5cm]{esecuzioni_multiple/100/iter2.png}
         \label{fig:100_iter2}
     \end{minipage}
     \caption{Boxplot al variare del numero di iterazioni}
@@ -412,8 +414,8 @@ La regolarizzazione di Tikhonov ha richiesto un numero di iterazioni contentuto 
 In linea di massima, sperimentalmente si è notato che il tempo di esecuzione richiesto con il metodo tramite variazione totale è stato in generale maggiore rispetto a Tikhonov.
 
 \subsection{Esecuzioni sul dataset}
-Rispetto al dataset utilizzato, sono state eseguite diverse misurazioni al variare della dimensione del kernel, del valore di $\sigma$ e della deviazione standard del rumore. 
-Per tutte le esecuzioni è stato scelto il valore del termine di regolarizzazione utilizzando lo stesso procedimento nella \autoref{chap:lambda}.\\
+Rispetto al dataset utilizzato, sono state eseguite diverse misurazioni al variare della dimensione del kernel, del valore di $\sigma_{\text{kernel}}$ e della deviazione standard del rumore. 
+Per tutte le esecuzioni è stato scelto il valore del parametro di regolarizzazione utilizzando lo stesso procedimento iterativo della \autoref{chap:lambda}.\\
 I risultati in forma aggregata sono i seguenti:
 \begin{center}
     \begin{tabular}{ |cc|c|c|c|c|c|c|c| }
@@ -442,8 +444,30 @@ I risultati in forma aggregata sono i seguenti:
     \hline
     \end{tabular}
 \end{center}
-Come in tutti i casi precedenti, la ricostruzione naive ha prodotto soluzioni completamente distanti dall realtà.\\
-Si nota, invece, un fenomeno ricorrente nella precisione di ricostruzione per i metodi regolarizzati all'aumentare di $\sigma_{\text{kernel}}$. \\
-Con Tikhonov si nota che la fedeltà rispetto all'immagine reale aumenta all'aumentare di $\sigma_{\text{kernel}}$, mentre tramite variazione totale, il fenomeno è inverso, generando una ricostruzione meno accurata.
+Come in tutti i casi precedenti, la ricostruzione naive ha prodotto soluzioni completamente distanti dall'immagine reale.\\
+Si nota, invece, un fenomeno ricorrente nella precisione di ricostruzione per i metodi regolarizzati all'aumentare di $\sigma_{\text{kernel}}$. Con Tikhonov si la fedeltà della soluzione rispetto all'immagine reale è maggiore all'aumentare di $\sigma_{\text{kernel}}$, mentre per la variazione totale, il fenomeno è inverso, generando una ricostruzione meno accurata.
+
+\begin{center}
+    \begin{tabular}{ |cc|c|c|c|c|c|c|c| }
+    \hline
+    & & & \multicolumn{3}{c|}{MSE} & \multicolumn{3}{c|}{PSNR} \\
+    \hline
+    \multicolumn{2}{|c|}{Kernel} & Noise & Naive & Tikhonov & Var. tot. & Naive & Tikhonov & Var. tot. \\ 
+    \hline
+    $9 \times 9$ & $\sigma=0.5$ & $\sigma=0.05$ & $0.19 \cdot 10^{0}$ & $0.40 \cdot 10^{-2}$ & $0.21 \cdot 10^{-3}$ & 7.13 & 24.16 & 36.9 \\
+	$9 \times 9$ & $\sigma=1$ & $\sigma=0.05$ & $0.10 \cdot 10^{1}$ & $0.27 \cdot 10^{-2}$ & $0.23 \cdot 10^{-3}$ & -0.17 & 25.85 & 36.42 \\
+	$9 \times 9$ & $\sigma=1.3$ & $\sigma=0.05$ & $0.76 \cdot 10^{0}$ & $0.24 \cdot 10^{-2}$ & $0.25 \cdot 10^{-3}$ & 1.18 & 26.35 & 36.16 \\
+    $9 \times 9$ & $\sigma=3$ & $\sigma=0.05$ & $0.53 \cdot 10^{0}$ & $0.17 \cdot 10^{-2}$ & $0.36 \cdot 10^{-3}$ & 2.73 & 27.77 & 34.68 \\
+    $9 \times 9$ & $\sigma=4$ & $\sigma=0.05$ & $0.12 \cdot 10^{1}$ & $0.16 \cdot 10^{-2}$ & $0.39 \cdot 10^{-3}$ & -0.79 & 28.14 & 34.24 \\
+    $9 \times 9$ & $\sigma=5$ & $\sigma=0.05$ & $0.12 \cdot 10^{1}$ & $0.15 \cdot 10^{-2}$ & $0.42 \cdot 10^{-3}$ & -0.91 & 28.31 & 33.85 \\
+    $9 \times 9$ & $\sigma=10$ & $\sigma=0.05$ & $0.85 \cdot 10^{0}$ & $0.17 \cdot 10^{-2}$ & $0.58 \cdot 10^{-3}$ & 0.72 & 27.97 & 32.55 \\
+    $9 \times 9$ & $\sigma=15$ & $\sigma=0.05$ & $0.99 \cdot 10^{0}$ & $0.18 \cdot 10^{-2}$ & $0.58 \cdot 10^{-3}$ & 0.06 & 27.71 & 32.52 \\
+    $9 \times 9$ & $\sigma=30$ & $\sigma=0.05$ & $0.14 \cdot 10^{1}$ & $0.19 \cdot 10^{-2}$ & $0.59 \cdot 10^{-3}$ & -1.55 & 27.36 & 32.43 \\
+    $9 \times 9$ & $\sigma=60$ & $\sigma=0.05$ & $0.16 \cdot 10^{1}$ & $0.20 \cdot 10^{-2}$ & $0.64 \cdot 10^{-3}$ & -2.12 & 27.19 & 32.1 \\
+    $9 \times 9$ & $\sigma=100$ & $\sigma=0.05$ & $0.17 \cdot 10^{1}$ & $0.21 \cdot 10^{-2}$ & $0.59 \cdot 10^{-3}$ & -2.29 & 27.08 & 32.42 \\
+	$9 \times 9$ & $\sigma=200$ & $\sigma=0.05$ & $0.17 \cdot 10^{1}$ & $0.21 \cdot 10^{-2}$ & $0.61 \cdot 10^{-3}$ & -2.38 & 27.04 & 32.29 \\
+	\hline
+    \end{tabular}
+\end{center}
 
 \end{document}
