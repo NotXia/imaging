@@ -88,8 +88,10 @@ Per la risoluzione sono note diverse formulazioni. Quelle impiegate sono:
 Per misurare la qualità dei risultati verranno impiegate due metriche:
 \begin{itemize}
     \setlength\itemsep{0.05cm}
-    \item Mean Squared Error (MSE) \textbf{[AGGIUNGERE DESCRIZIONE]}
-    \item Peak Signal-to-Noise Ratio (PSNR) \textbf{[AGGIUNGERE DESCRIZIONE]}
+    \item Mean Squared Error (MSE) è un valore sempre positivo che può essere usato per stimare una misura qualitativa. \\
+    La presenza del quadrato permette di "esagerare" il valore ottenuto in presenza di errori elevati e di minimizzare in presenza di errori piccoli.
+    \item Peak Signal-to-Noise Ratio (PSNR) è una metrica usata per valutare la qualità di ricostruzione di un'immagine o un video.\\
+    Se due immagini sono identiche, il $\text{PSNR}=\infty$. Quindi maggiore è il PSNR, maggiore è la vicinanza tra le immagini confrontate.
 \end{itemize}
 
 \newpage
@@ -484,7 +486,43 @@ mentre aumentando il fattore di blur, il risultato tende ad essere migliore fino
 Il metodo tramite variazione totale, invece, ha un comportamento più lineare e all'aumentare di $\sigma_{\text{kernel}}$ decresce la qualità dell'immagine.
 
 \section{Applicazione su immagini complesse}
+\subsection{Notte stellata 1}
+Utilizzando un blur con kernel $9 \times 9$, $\sigma=0.5$ e un rumore con deviazione standard $0.05$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm]{reale/1/1/deblur.png}
+    \caption{Deblur applicato sulla Notte Stellata}
+    \label{fig:deblur_reale1_1}
+\end{figure}
+\begin{center}
+    \begin{tabular}{ |c|c|c|c|c|c| }
+    \hline
+    & Acquisita & Naive & Tikhonov & Variazione totale \\ 
+    \hline
+    MSE & $0.531 \cdot 10^{-2}$ & $0.204 \cdot 10^{0}$ & $0.712 \cdot 10^{-2}$ & $0.502 \cdot 10^{-2}$ \\ 
+    PSNR & $22.75$ & $6.91$ & $21.47$ & $22.99$ \\ 
+    \hline
+    \end{tabular}
+\end{center}
 
+\subsection{Notte stellata 2}
+Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviazione standard $0.1$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm]{reale/1/2/deblur.png}
+    \caption{Deblur applicato sulla Notte Stellata}
+    \label{fig:deblur_reale1_2}
+\end{figure}
+\begin{center}
+    \begin{tabular}{ |c|c|c|c|c|c| }
+    \hline
+    & Acquisita & Naive & Tikhonov & Variazione totale \\ 
+    \hline
+    MSE & $0.173 \cdot 10^{-1}$ & $0.212 \cdot 10^{2}$ & $0.105 \cdot 10^{-1}$ & $0.818 \cdot 10^{-2}$ \\ 
+    PSNR & $17.61$ & $-13.26$ & $19.80$ & $20.87$ \\ 
+    \hline
+    \end{tabular}
+\end{center}
 
 \section{Conclusioni}
 \subsection{Metodo naive}
