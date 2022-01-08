@@ -11,6 +11,12 @@
 \usepackage{mwe}
 \usepackage{hyperref}
 
+\usepackage[
+backend=biber,
+sorting=none
+]{biblatex}
+\addbibresource{bibliografia.bib}
+
 \tolerance=1
 \emergencystretch=\maxdimen
 \hyphenpenalty=10000
@@ -100,7 +106,7 @@ Per avere una visione sul comportamento delle varie formulazioni, è stata esegu
 \subsection{Prima esecuzione}
 La prima esecuzione è stata effettuata con un blur generato da un kernel $5 \times 5$ con $\sigma=0.5$ e rumore gaussiano con deviazione standard $0.05$.
 
-\subsubsection{Stima di $\lambda$}
+\subsubsection{Stima di lambda}
 Per eseguire i metodi regolarizzati è necessario prima determinare il valore $\lambda$ del parametro di regolarizzazione.\\
 Esistono condizioni che permettono di determinare se un valore di $\lambda$ sia accettabile o meno. In questo progetto verrà determinato utilizzando una ricerca iterativa del punto migliore.\\
 Il seguente grafico mostra il valore del PSNR al variare di $\lambda \in [0.01, 1]$ con passo $0.01$ per Tikhonov:
@@ -146,7 +152,7 @@ Con la regolarizzazione tramite variazione totale, il risultato ottenuto è inve
 \subsection{Seconda esecuzione}
 Per vedere le prestazioni di Tikhonov in uno scenario differente, è stata effettuata una seconda esecuzione sulla stessa immagine di partenza con blur ottenuto da un kernel $25 \times 25$ con $\sigma=3$ e rumore con deviazione standard $0.05$.
 
-\subsubsection{Stima di $\lambda$}
+\subsubsection{Stima di lambda}
 \begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
@@ -262,7 +268,7 @@ La soluzione calcolata invece, escludendo valori di tolleranza elevati, converge
 \section{Semi-convergenza}
 \label{chap:semiconv}
 Nella \autoref{chap:confronto} è emerso il problema per cui l'immagine ottenuta con meno iterazioni è migliore rispetto a quella ottenuta quando il metodo raggiunge convergenza. 
-Tale problema è noto come semi-convergenza, ovvero quando il raggiungimento dell'ottimo non corrisponde al soddisfacimento delle condizioni di convergenza e per questo le iterazioni successive peggiorano il risultato.\\
+Tale problema è noto come semi-convergenza \cite{1}\cite{2}\cite{3}, ovvero quando il raggiungimento dell'ottimo non corrisponde al soddisfacimento delle condizioni di convergenza e per questo le iterazioni successive peggiorano il risultato.\\
 Nel contesto del deblur, il problema di semi-convergenza è causato dal rumore aggiunto all'immagine. È noto che il metodo naive è quello che più viene condizionato dal rumore e per questa ragione vengono introdotti i metodi di regolarizzazione.\\
 Si analizza quindi il risultato dei vari metodi valutando l'andamento del PSNR rispetto all'iterato $x_{k}$:
 
@@ -477,7 +483,7 @@ Il risultato prodotto da Tikhonov, su immagini a cui è stato applicato un blur 
 mentre aumentando il fattore di blur, il risultato tende ad essere migliore fino ad una soglia dopo la quale inizia a descrescere.\\
 Il metodo tramite variazione totale, invece, ha un comportamento più lineare e all'aumentare di $\sigma_{\text{kernel}}$ decresce la qualità dell'immagine.
 
-\section{Applicazione su immagini reali}
+\section{Applicazione su immagini complesse}
 
 
 \section{Conclusioni}
@@ -493,8 +499,9 @@ In termini di prestazioni invece, il metodo converge in un numero di iterazioni 
 \subsection{Regolarizzazione tramite variazione totale}
 Il metodo di regolarizzazione tramite variazione totale è invece il metodo che, tra quelli utilizzati, produce la soluzione migliore.\\
 A differenza degli altri metodi, si è notato che non è soggetto al problema di semi-convergenza e produce in tutti i casi analizzati una buona approssimazione dell'immagine reale.\\
-A livello di velocità, il numero di iterazioni richiesto tende a non essere "prevedibile" e anche il tempo di esecuzione è solitamente stato maggiore rispetto a Tikhonov.
+A livello di velocità, il numero di iterazioni richiesto tende a non essere "prevedibile" e anche il tempo di esecuzione è solitamente stato maggiore rispetto a Tikhonov.\\
 
-\section{Bibliografia}
+\newpage
+\printbibliography[title={Bibliografia}]
 
 \end{document}
