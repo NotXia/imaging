@@ -70,8 +70,8 @@ sorting=none
 \end{titlepage}
 \pagebreak
 
-
-
+\tableofcontents
+\newpage
 
 \section{Introduzione}
 Il progetto consiste nel ricostruire un'immagine a partire da una sua istanza alterata da uno sfocamento noto e un rumore casuale.\\
@@ -236,9 +236,9 @@ I risultati ottenuti sono i seguenti:
     \caption{PSNR al variare della tolleranza}
     \label{fig:tol_psnr1}
 \end{figure}
-A livello di precisione invece, il risultato ottenuto mostra che i due metodi, al variare della tolleranza, convergono allo stesso risultato.\\
-È però presente un comportamento controintuitivo in vicinanza di valori di tolleranza elevati. 
-Infatti si ottiene un PSNR maggiore in corrispondenza di tali valori, in altri termini, si ottiene un'immagine più fedele all'originale con meno iterazioni, mentre il risultato peggiora nella continuazione dell'esecuzione (tale problematica verrà approfondita nella \autoref{chap:semiconv}).
+A livello di precisione, invece, il risultato ottenuto mostra che i due metodi, al variare della tolleranza, convergono allo stesso risultato.\\
+È però presente un comportamento controintuitivo in vicinanza di valori di tolleranza elevati dove si ottiene un PSNR maggiore.
+In altri termini, si ottiene un'immagine più fedele all'originale con meno iterazioni, mentre il risultato peggiora nella continuazione dell'esecuzione (tale problematica verrà approfondita nella \autoref{chap:semiconv}).
 
 \begin{figure}[H]
     \centering
@@ -284,7 +284,7 @@ Per una seconda valutazione si è usato un kernel $25 \times 25$ con $\sigma=3$ 
 \end{figure}
 
 I risultati ottenuti sono in linea con quelli precedenti ed evidenziano che le prestazioni del gradiente coniugato sono maggiori rispetto a quelle del metodo del gradiente, 
-come atteso dalle analisi teoriche. Infatti le immagini utilizzate sono a sfondo omogeneo e tendono ad essere molto vicine alla forma di una matrice sparsa per la quale il metodo del gradiente coniugato ha buone prestazioni.\\
+come atteso dalle analisi teoriche. Infatti, le immagini utilizzate sono a sfondo omogeneo e tendono ad essere molto vicine alla forma di una matrice sparsa per la quale il metodo del gradiente coniugato ha buone prestazioni.\\
 La soluzione calcolata invece, escludendo valori di tolleranza elevati, converge intorno allo stesso valore e per questo motivo è, in generale, indifferente utilizzare l'implementazione del deblur con i due metodi di discesa. Ovviamente per questioni di velocità, si preferisce utilizzare il metodo implementato con il gradiente coniugato.
 
 
@@ -342,12 +342,12 @@ Infatti si nota che, nonostante sia ancora presente il problema di semi-converge
     \caption{Risultato ottenuto}
     \label{fig:semiconv_deblur_tv1}
 \end{figure}
-Regolarizzando tramite variazione totale invece, il problema di semi-convergenza è assente nel caso dell'immagine analizzata e il raggiungimento dell'ottimo avviene contemporaneamente al soddisfacimento delle condizioni di convergenza.
+Regolarizzando tramite variazione totale, invece, il problema di semi-convergenza è assente nel caso dell'immagine analizzata e il raggiungimento dell'ottimo avviene contemporaneamente al soddisfacimento delle condizioni di convergenza.
 
 \subsubsection{Considerazioni finali}
 Le prove precedenti sono state eseguite con kernel $5 \times 5$ con $\sigma=0.5$ e kernel $25 \times 25$ con $\sigma=3$, entrambi i casi applicando un rumore con deviazione standard $0.05$.\\
 La regolarizzazione tramite variazione totale si è rivelata la soluzione meno soggetta alla semi-convergenza, mentre Tikhonov, nonostante non restituisca la soluzione del punto ottimo, è in grado di ridurre significativamente il deterioramento della soluzione.\\~\\
-Nel caso generale, non è possibile risolvere il problema di semi-convergenza interrompendo l'esecuzione quando si rileva un punto di massimo. 
+Nel caso generale, non è però possibile risolvere il problema di semi-convergenza interrompendo l'esecuzione quando si rileva un punto di massimo. 
 Un controesempio è il caso del metodo del gradiente in \autoref{fig:semiconv_psnr_tikhonov1}, infatti, l'andamento del PSNR può assume più punti di massimo locale e quindi esisteranno casi in cui il primo massimo raggiunto non sarà necessariamente la soluzione ottima.
 
 \subsection{Analisi senza rumore}
@@ -449,9 +449,7 @@ Anche a livello di numero di iterazioni, il metodo naive ha avuto il risultato p
 La regolarizzazione di Tikhonov ha richiesto un numero di iterazioni contenuto e coerente, mentre la regolarizzazione tramite variazione totale ha mostrato dati più diradati e meno prevedibili.\\
 In linea di massima, considerando la complessità dei termini di regolarizzazione e gli esperimenti effettuati, il tempo di esecuzione richiesto per la regolarizzazione tramite variazione totale è in generale maggiore rispetto a Tikhonov.
 
-
-
-
+\newpage
 \subsection{Esecuzioni sul dataset}
 Rispetto al dataset utilizzato, sono state eseguite diverse misurazioni al variare della dimensione del kernel, del valore di $\sigma_{\text{kernel}}$ e della deviazione standard del rumore. 
 Per tutte le esecuzioni è stato scelto il valore del parametro di regolarizzazione utilizzando lo stesso procedimento iterativo della \autoref{chap:lambda}.\\
@@ -487,9 +485,9 @@ I risultati in forma aggregata sono i seguenti:
     \end{tabular}
 \end{center}
 Come in tutti i casi precedenti, la ricostruzione naive ha prodotto soluzioni completamente distanti dall'immagine reale.\\
-Si nota che, variando la dimensione del kernel fissato $\sigma_{\text{kernel}}$, il risultato ottenuto varia tra i vari casi di piccole quantità e non appaiono particolari correlazioni.\\
+Si nota che, variando la dimensione del kernel fissato $\sigma_{\text{kernel}}$, il risultato ottenuto varia tra i diversi casi di piccole quantità e non appaiono particolari correlazioni.\\
 È evidente, invece, un fenomeno ricorrente nella precisione di ricostruzione per i metodi regolarizzati all'aumentare di $\sigma_{\text{kernel}}$. 
-Con Tikhonov la fedeltà della soluzione rispetto all'immagine reale è maggiore all'aumentare di $\sigma_{\text{kernel}}$, mentre per la variazione totale, il fenomeno è inverso, generando una ricostruzione meno accurata.
+Con Tikhonov la fedeltà della soluzione rispetto all'immagine reale è maggiore all'aumentare di $\sigma_{\text{kernel}}$, mentre per la variazione totale il fenomeno è inverso, generando una ricostruzione meno accurata.
 
 \begin{center}
     \begin{tabular}{ |cc|c|c|c|c|c|c|c| }
@@ -514,7 +512,7 @@ Con Tikhonov la fedeltà della soluzione rispetto all'immagine reale è maggiore
     \end{tabular}
 \end{center}
 
-Analizzando più nel dettaglio il fenomeno, fissata una dimensione del kernel e variando il valore di $\sigma_{\text{kernel}}$, si nota lo stesso fenomeno visto in \autoref{chap:lambda}. 
+Analizzando più nel dettaglio il fenomeno, fissata una dimensione del kernel e variando il valore di $\sigma_{\text{kernel}}$, si nota lo stesso comportamento visto in \autoref{chap:lambda}. 
 Il risultato prodotto da Tikhonov, su immagini a cui è stato applicato un blur di ordini di grandezza contenuti, produce una soluzione molto simile all'immagine acquisita, 
 mentre aumentando il fattore di blur, il risultato tende ad essere migliore fino ad una soglia dopo la quale inizia a descrescere.\\
 Il metodo tramite variazione totale, invece, ha un comportamento più lineare e all'aumentare di $\sigma_{\text{kernel}}$ decresce la qualità dell'immagine.
@@ -524,9 +522,10 @@ Il metodo tramite variazione totale, invece, ha un comportamento più lineare e 
 
 \newpage
 \section{Applicazione su immagini complesse}
-\subsection{Notte stellata}
+
+\subsection{Notte Stellata}
 \subsubsection{Prima esecuzione}
-Utilizzando un blur con kernel $9 \times 9$, $\sigma=0.5$ e un rumore con deviazione standard $0.05$.
+Utilizzando un blur con kernel $9 \times 9$, $\sigma=0.5$ e un rumore con deviazione standard $0.05$:
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{reale/1/1/deblur.png}
@@ -544,8 +543,9 @@ Utilizzando un blur con kernel $9 \times 9$, $\sigma=0.5$ e un rumore con deviaz
     \end{tabular}
 \end{center}
 
+\newpage
 \subsubsection{Seconda esecuzione}
-Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviazione standard $0.1$.
+Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviazione standard $0.1$:
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{reale/1/2/deblur.png}
@@ -563,12 +563,33 @@ Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviaz
     \end{tabular}
 \end{center}
 
+\subsubsection{Analisi}
+Come in \autoref{chap:lambda}, il risultato ottenuto con naive in tutti i casi è molto instabile, 
+mentre con Tikhonov vengono prodotti risultati significativi con valori di $\sigma_{\text{kernel}}$ non troppo piccoli.\\
+Per la regolarizzazione tramite variazione totale, invece, a differenza dei casi precedentemente analizzati, è presente il problema di semi-convergenza in una forma molto contenuta:
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=7cm]{reale/1/1/tv_semiconvergenza.png}
+        \caption{PSNR per la $1^a$ esecuzione}
+    \label{fig:semiconvergenza_reale1_1}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=7cm]{reale/1/2/tv_semiconvergenza.png}
+        \caption{PSNR per la $2^a$ esecuzione}
+    \label{fig:semiconvergenza_reale1_2}
+    \end{minipage}
+\end{figure}
+
+
 \subsection{Cielo stellato}
-Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviazione standard $0.05$.
+Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviazione standard $0.05$:
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{reale/2/deblur.png}
-    \caption{Deblur applicato sulla Notte Stellata}
+    \caption{Deblur applicato sul cielo stellato}
     \label{fig:deblur_reale2}
 \end{figure}
 \begin{center}
@@ -582,13 +603,23 @@ Utilizzando un blur con kernel $25 \times 25$, $\sigma=3$ e un rumore con deviaz
     \end{tabular}
 \end{center}
 
+\subsubsection{Analisi}
+Anche in questo caso, il risultato ottenuto è del tutto simile alle analisi precedenti.\\
+L'unico aspetto particolare è che la semiconvergenza della regolarizzazione di Tikhonov ha assunto un comportamento simile a quello della variazione totale:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm]{reale/2/tikhonov_semiconvergenza.png}
+    \caption{Variazione del PSNR per Tikhonov}
+    \label{fig:semiconvergenza_reale2}
+\end{figure}
+
 
 
 
 \section{Conclusioni}
 \subsection{Metodo naive}
 Si può confermare che il processo di deblur risolvendo il problema ai minimi quadrati senza regolarizzazione è una soluzione estremamente mal condizionata e inaffidabile.\\
-Utilizzando un'immagine che non è soggetta a rumore, invece, il risultato prodotto è molto vicino a quella reale e tende ad essere migliore rispetto ai metodi regolarizzati
+Utilizzando un'immagine che non è soggetta a rumore, invece, il risultato prodotto è molto vicino a quella reale e tende ad essere migliore rispetto ai metodi regolarizzati.
 
 \subsection{Regolarizzazione di Tikhonov}
 Il metodo di regolarizzazione di Tikhonov si è rivelato utile su immagini con un blur di determinati ordini di grandezza. 
@@ -597,8 +628,9 @@ In termini di prestazioni invece, il metodo converge in un numero di iterazioni 
 
 \subsection{Regolarizzazione tramite variazione totale}
 Il metodo di regolarizzazione tramite variazione totale è invece il metodo che, tra quelli utilizzati, produce la soluzione migliore.\\
-A differenza degli altri metodi, si è notato che non è soggetto al problema di semi-convergenza e produce in tutti i casi analizzati una buona approssimazione dell'immagine reale.\\
-A livello di velocità, il numero di iterazioni richiesto tende a non essere "prevedibile" e anche il tempo di esecuzione è solitamente stato maggiore rispetto a Tikhonov.\\
+A differenza degli altri metodi, si è notato che è soggetto al problema di semi-convergenza in modo molto controllato e produce in tutti i casi analizzati una buona approssimazione dell'immagine reale.\\
+A livello di velocità, il numero di iterazioni richiesto in forma aggregata ha prodotto una deviazione standard molto elevata e per questo tende a non essere prevedibile. 
+Anche il tempo di esecuzione è solitamente stato maggiore rispetto a Tikhonov.\\
 
 
 
