@@ -1,6 +1,6 @@
 # Imaging
 ## Introduction
-Project for the Calculus course at the University of Bologna (A.Y. 2021-2022).
+Project for the Numerical Computing course at the University of Bologna (A.Y. 2021-2022).
 
 ### Description
 The assignment is to implement and analyze the behaviour of the image deblurring problem expressed as a minimum least square problem.\
